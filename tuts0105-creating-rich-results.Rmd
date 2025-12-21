@@ -129,12 +129,13 @@ Our results in jamovi should look something like this:
 Now we have everything working, let's remove the text results:
 
 ```{r eval=FALSE}
-ttestISClass <- R6Class("ttestISClass",
-    inherit=ttestISBase,
-    private=list(
-        .run=function() {
+ttestClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+  "ttestClass",
+  inherit = ttestBase,
+  private = list(
+    .run = function() {
 
-            formula <- constructFormula(self$options$dep, self$options$group)
+            formula <-  jmvcore:constructFormula(self$options$dep, self$options$group)
             formula <- as.formula(formula)
         
             results <- t.test(formula, self$data)
